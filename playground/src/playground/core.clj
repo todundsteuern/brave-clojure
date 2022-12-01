@@ -56,7 +56,7 @@
 
 (defn favorite-things
   [name & things]
-  (str "Hi, " name ", here are my favorite things: " 
+  (str "Hi, " name ", here are my favorite things: "
        (str/join ", " things)))
 
 (defn my-first
@@ -98,12 +98,20 @@
   (weird-arity 41)
 
   (codger "Billy" "Anne-Marie" "The Incredible Bulk")
-  
+
   (favorite-things "Doreen" "gum" "shoes" "kara-te")
-  
+
   (my-first ["oven" "bike" "war-axe"])
-  
+
   (chooser ["Marmalade" "Handsome Jack" "Pigpen" "Aquaman"])
 
   (announce-treasure-location {:lat 28.22 :lng 81.33})
-  )
+
+  (map (fn [name] (str "Hi, " name))
+       ["Darth Vader", "Mr. Magoo"])
+  (map #(str "Hi, " %)
+       ["Darth Vader", "Mr. Magoo"])
+
+  (#(* 3 %) 8)
+  (#(str %1 " and " %2) "cornbread" "butter beans")
+  (#(identity %&) 1 "blarg" :yip))
