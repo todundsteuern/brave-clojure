@@ -158,3 +158,34 @@
 
   (stats [3 4 10])
   (stats [80 1 44 13 6]))
+
+
+(defn my-conj
+  [target & additions]
+  (into target additions))
+
+(defn my-into
+  [target additions]
+  (apply conj target additions))
+
+(defn my-partial
+  [partialized-fn & args]
+  (fn [& more-args]
+    (apply partialized-fn (into args more-args))))
+
+(defn my-complement
+  [fun]
+  (fn [& args]
+    (not (apply fun args))))
+
+(comment
+  (my-conj [0] 1 2 3)
+
+  (my-into [0] [1 2 3])
+
+  (def add20 (my-partial + 20))
+  (add20 3)
+
+  (def my-pos? (my-complement neg?))
+  (my-pos? 1)
+  (my-pos? -1))
