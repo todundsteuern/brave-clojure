@@ -189,3 +189,33 @@
   (def my-pos? (my-complement neg?))
   (my-pos? 1)
   (my-pos? -1))
+
+
+(def character
+  {:name "Smooches McCutes"
+   :attributes {:intelligence 10
+                :strength 4
+                :dexterity 5}})
+(def c-str (comp :strength :attributes))
+(def c-int (comp :intelligence :attributes))
+(def c-dex (comp :dexterity :attributes))
+(def spell-slots (comp int inc #(/ % 2) c-int))
+
+(comment
+  (c-str character)
+  (c-int character)
+  (c-dex character)
+  (spell-slots character)
+  )
+
+
+(defn sleepy-identity
+  [x]
+  (Thread/sleep 1000)
+  x)
+
+(def memo-sleepy-identity (memoize sleepy-identity))
+
+(comment
+  (sleepy-identity "Mr. Fantastico")
+  (memo-sleepy-identity "Mr. Fantastico"))
