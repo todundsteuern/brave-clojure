@@ -108,6 +108,12 @@
   ([f [head & tail]]
    (my-reduce f head tail)))
 
+(def sum #(reduce + %))
+(def avg #(/ (sum %) (count %)))
+(defn stats
+  [numbers]
+  (map #(% numbers) [sum count avg]))
+
 (comment
   (doc too-enthusiastic)
 
@@ -148,4 +154,7 @@
   (def dec4 (dec-maker 4))
   (dec4 7)
 
-  (map-set keyword '("you" "shall" "not" "pass" "shall" "not" "pass")))
+  (map-set keyword '("you" "shall" "not" "pass" "shall" "not" "pass"))
+
+  (stats [3 4 10])
+  (stats [80 1 44 13 6]))
