@@ -1,6 +1,7 @@
 (ns playground.core
   (:require [clojure.repl :refer [doc]]
-            [clojure.string :as str])
+            [clojure.string :as str]
+            [clojure.test :as t])
   (:gen-class))
 
 #_{:clj-kondo/ignore [:unused-binding]}
@@ -58,6 +59,29 @@
   (str "Hi, " name ", here are my favorite things: " 
        (str/join ", " things)))
 
+(defn my-first
+  [[first-thing]]
+  first-thing)
+
+(defn chooser
+  [[first-choice second-choice & unimportant-choices]]
+  (println (str "Your first choice is: " first-choice))
+  (println (str "Your second choice is: " second-choice))
+  (println (str "We're ignoring the rest of your choices. "
+                "Here they are in case you need to cry over them: "
+                (str/join ", " unimportant-choices))))
+
+;; (defn announce-treasure-location
+;;   [{lat :lat lng :lng}]
+;;   (println (str "Treasure lat: " lat))
+;;   (println (str "Treasure lng: " lng)))
+
+(defn announce-treasure-location
+  [{:keys [lat lng] :as treasure-location}]
+  (println (str "Treasure lat: " lat))
+  (println (str "Treasure lng: " lng))
+  (println (str "Treasure location: " treasure-location)))
+
 (comment
   (doc too-enthusiastic)
 
@@ -75,4 +99,11 @@
 
   (codger "Billy" "Anne-Marie" "The Incredible Bulk")
   
-  (favorite-things "Doreen" "gum" "shoes" "kara-te"))
+  (favorite-things "Doreen" "gum" "shoes" "kara-te")
+  
+  (my-first ["oven" "bike" "war-axe"])
+  
+  (chooser ["Marmalade" "Handsome Jack" "Pigpen" "Aquaman"])
+
+  (announce-treasure-location {:lat 28.22 :lng 81.33})
+  )
