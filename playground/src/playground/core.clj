@@ -1,7 +1,6 @@
 (ns playground.core
   (:require [clojure.repl :refer [doc]]
-            [clojure.string :as str]
-            [clojure.test :as t])
+            [clojure.string :as str])
   (:gen-class))
 
 #_{:clj-kondo/ignore [:unused-binding]}
