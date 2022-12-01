@@ -82,6 +82,11 @@
   (println (str "Treasure lng: " lng))
   (println (str "Treasure location: " treasure-location)))
 
+(defn inc-maker
+  "Create a custom incrementor"
+  [inc-by]
+  #(+ % inc-by))
+
 (comment
   (doc too-enthusiastic)
 
@@ -114,4 +119,7 @@
 
   (#(* 3 %) 8)
   (#(str %1 " and " %2) "cornbread" "butter beans")
-  (#(identity %&) 1 "blarg" :yip))
+  (#(identity %&) 1 "blarg" :yip)
+
+  (def inc3 (inc-maker 3))
+  (inc3 7))
