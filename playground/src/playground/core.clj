@@ -86,6 +86,17 @@
   [inc-by]
   #(+ % inc-by))
 
+(defn dec-maker
+  "Create a custom decrementor"
+  [dec-by]
+  #(- % dec-by))
+
+(defn map-set
+  "Works like map, except the return value is a set."
+  [f coll]
+  (-> (map f coll)
+      set))
+
 (defn my-reduce
   ([f initial coll]
    (loop [result initial
@@ -132,4 +143,9 @@
   (#(identity %&) 1 "blarg" :yip)
 
   (def inc3 (inc-maker 3))
-  (inc3 7))
+  (inc3 7)
+
+  (def dec4 (dec-maker 4))
+  (dec4 7)
+
+  (map-set keyword '("you" "shall" "not" "pass" "shall" "not" "pass")))
