@@ -34,26 +34,59 @@
 
 (defn glitter-filter
   [minimum-glitter records]
-  (filter #(>= (:glitter-index %) minimum-glitter)
-          records))
+  (->> records
+       (filter #(>= (:glitter-index %) minimum-glitter))
+       (map :name)))
+
+(defn validate
+  [kw-to-validation-fns record]
+  (let [keys (keys kw-to-validation-fns)]
+    (->> (reduce (fn [result key]
+                   (conj result (contains? record key)))
+                 []
+                 keys)
+         (every? true?))))
+
+(defn append
+  [records record]
+  (if (validate conversions record)
+    (conj records record)
+    records))
+
+(defn stringify
+  [list-of-maps]
+  (let [headers (->> (first list-of-maps)
+                     keys
+                     (map name)
+                     (str/join ",")) 
+        records (->> (map vals list-of-maps)
+                     (map #(str/join "," %))
+                     )]
+    (->> (into [headers] records)
+         (str/join "\n"))))
 
 (comment
   (->> filename
        slurp
        parse
-       first
-       (map vector vamp-keys)
-       (reduce (fn [result [vamp-key value]]
-                 (assoc result vamp-key (convert vamp-key value)))
-               {}))
+       mapify
+       (glitter-filter 3))
 
   (-> filename
       slurp
       parse
-      mapify)
-
-  (->> filename
-       slurp
-       parse
-       mapify
-       (glitter-filter 3)))
+      mapify
+      (append {:name "McFishwich" :glitter-index 0}))
+  
+  (-> filename
+      slurp
+      parse
+      mapify
+      (append {:name "McFishwich" :no-glitter true}))
+  
+  (-> filename
+      slurp
+      parse
+      mapify
+      stringify)
+  )
