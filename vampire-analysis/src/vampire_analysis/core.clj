@@ -70,4 +70,15 @@
   (time (identify-vampire (range 0 1000000)))
 
   (concat (take 8 (repeat "na")) ["Batman!"])
-  (take 3 (repeatedly #(rand-int 10))))
+  (take 3 (repeatedly #(rand-int 10)))
+
+
+  ;; demonstrate the collection abstraction
+  ;; via collection functions   
+  (into {} (map identity {:sunlight-reaction "glitter"}))
+  (into [] (map identity [:garlic :sesame-oil :fried-eggs]))
+  (into #{} (map identity [:garlic-clove :garlic-clove]))
+  (into {:favorite-emotion "gloomy"} [[:sunlight-reaction "glitter!"]])
+  (into ["cherry"] '("pine" "spruce"))
+  (into {:favorite-animal "kitty"} {:least-favorite-smell "dog"
+                                    :relationship-with-teenager "creepy"}))
